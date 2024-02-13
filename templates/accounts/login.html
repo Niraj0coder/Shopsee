@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css\login.css'%}">
+    <title>{% block title %}{% endblock title %}</title>
+		<title>RegistrationForm_v10 by Colorlib</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+		<!-- LINEARICONS -->
+		<link rel="stylesheet" href="fonts/linearicons/style.css">
+		
+	
+	</head>
+
+
+	<body>
+		{%if message%}
+		{% for message in messages %}
+		<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+		{% endfor %}
+		{%endif%}
+
+
+		<div class="wrapper">
+		
+			<div class="inner">
+
+				<img src="static/image/image-1.png" alt="" class="image-1">
+				<div class="fm">
+
+		
+				<form action="" method="POST">
+				
+					{% csrf_token %}
+					<h3>Login Here</h3>
+					<div class="form-holder">
+						<span class="lnr lnr-user"></span>
+						<input name="uname" type="text" class="form-control" placeholder="Username">
+					</div>
+					
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input name="pass1" type="password" class="form-control" placeholder="Password">
+					</div>
+			
+					{% if messages %}
+					<ul class="messages">
+						{% for message in messages %}
+						<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+                        
+
+					<button>
+						<span>Sign in</span>
+					</button>
+				</form>
+				<div class="sf">
+					<p style="cursor: pointer ; font-size:17px;"><a href="/register"> <b>Signup</b></a></p>
+					<p> <a href=""> <b>Forget Password?</b></a></p>
+				</div>
+			</div>
+				<img src="static/image/image-2.png" alt="" class="image-2">
+			</div>
+			
+		</div>
+		
+		
+	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

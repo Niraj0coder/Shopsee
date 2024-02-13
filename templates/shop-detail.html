@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{%load static%}
+{% block body %}
+
+
+
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Shop Detail</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+        <li class="breadcrumb-item"><a href="/category">Category</a></li>
+        <li class="breadcrumb-item active text-white">Shop Detail</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+
+<!-- Single Product Start -->
+<div class="container-fluid py-5 mt-5">
+    <div class="container py-5">
+        <div class="row g-4 mb-5">
+
+
+
+            <div class="col-lg-8 col-xl-9">
+                <div class="row g-4">
+
+
+                    {%for i in pro%}
+                    <div class="col-lg-6">
+                        <div class="border rounded">
+                            <a href="#">
+                                <img src="{{i.image.url}}" class="img-fluid rounded" alt="Image">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="fw-bold mb-3">{{i.productname}}</h4>
+                        <p class="mb-3">{{i.category.name}}</p>
+                        <h5 class="fw-bold mb-3"><strike style="color: red;">₹{{i.price}}</strike></h5>
+                        <h5 class="fw-bold mb-3">₹{{i.discount_price}}</h5>
+
+                        <p class="mb-4">{{i.aboutproduct1}}</p>
+                        <p class="mb-4">{{i.aboutproduct2}}</p>
+                        <form action="/add_to_cart" method="POST">
+                            {% csrf_token %}
+                            <input name="prod" hidden value="{{i.id}}" type="text">
+
+                            <button href="#"
+                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
+
+                        </form>
+
+
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <nav>
+                            <div class="nav nav-tabs mb-3">
+                                <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
+                                    aria-controls="nav-about" aria-selected="true">Description</button>
+
+                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                    aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content mb-5">
+                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                <p>{{i.description}}</p>
+
+                            </div>
+                            {%endfor%}
+                            <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+
+
+
+
+                                {%for s in review%}
+                                <div class="d-flex">
+                                    <img src="{{s.user.profile.profile_image.url}}" class="img-fluid rounded-circle p-3"
+                                        style="width: 100px; height: 100px;" alt="">
+                                    <div class="">
+                                        <p class="mb-2" style="font-size: 14px;">{{s.created}}</p>
+                                        <div class="d-flex justify-content-between">
+                                            <h5>{{s.user.username}}</h5>
+                                            <div class="d-flex mb-3">
+                                                <p>{{s.rate}} <i class="fa fa-star text-secondary"></i></p>
+
+                                            </div>
+                                        </div>
+                                        <p>{{s.Desc}} </p>
+                                    </div>
+                                </div>
+                                {%endfor%}
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {%if message%}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+                    {% endfor %}
+                    {%endif%}
+                    {%if request.user.is_authenticated%}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                        <div class="row g-4">
+
+                            <div class="col-lg-12">
+                                <div class="border-bottom rounded my-4">
+                                    <textarea name="desc" id="" class="form-control border-0" cols="30" rows="8"
+                                        placeholder="Your Review *" spellcheck="false"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-between py-3 mb-5">
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="col-25">
+                                            <label for="rate">Rating : </label>
+                                        </div>
+                                        <div class="ratings">
+                                            <input type="radio" name="rate" id="star5" value="5"><label for="star5"
+                                                title="5"></label>
+                                            <input type="radio" name="rate" id="star4" value="4"><label for="star4"
+                                                title="4"></label>
+                                            <input type="radio" name="rate" id="star3" value="3"><label for="star3"
+                                                title="3"></label>
+                                            <input type="radio" name="rate" id="star2" value="2"><label for="star2"
+                                                title="2"></label>
+                                            <input type="radio" name="rate" id="star1" value="1"><label for="star1"
+                                                title="1"></label>
+                                        </div>
+
+
+                                    </div>
+                                    <button href="#"
+                                        class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post
+                                        Comment</button>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </form>
+                    {%else%}
+                    <p>Please Login To Comment</p>
+                    {%endif%}
+                </div>
+            </div>
+            <div class="col-lg-4 col-xl-3">
+                <div class="row g-4 fruite">
+                    <div class="col-lg-12">
+                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                            <input type="search" class="form-control p-3" placeholder="keywords"
+                                aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                        <div class="mb-4">
+                            <h4>Categories</h4>
+                            <ul class="list-unstyled fruite-categorie">
+                                {%for i in cat%}
+                                <li>
+                                    <div class="d-flex justify-content-between fruite-name">
+                                        <a href="/subcategory/{{i.id}}"></i>{{i.categoryname}}</a>
+
+                                    </div>
+                                </li>
+                                {%endfor%}
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Single Product End -->
+{%endblock body%}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+
+{% block body %}
+
+
+
+<div class="cur" style="display: flex;">
+    <a class="cursor" href="/home"><p>/Home</p></a>
+   
+
+</div>
+<div class="infoo">
+<div class="Pay-box" style="text-align:center;">
+<h1 class="head-paytext">Payment Failed</h1>
+
+
+
+<h3>Sorry! Your payment has been failed. Please try again.</h3>
+<br>
+<p class="mainmessage">
+In case your money has been deducted, money will be autorefunded in 7-10 days.
+</p>
+<br>
+
+<div>
+    <p>here Your Order Id {{order.orderid}}</p>
+    
+    <p>ErrorCode : {{status.error_code}}</p>
+    <p>Error description : {{status.error_description}}</p>
+    <p>Error Source : {{status.error_source}}</p>
+    <p>Reason : {{status.error_reason}}</p>
+    </div>
+<p class="mainmessage">Thank You for choosing us. You can contact us for any queries or details.</p>
+</div>
+
+</div>
+
+    
+{% endblock %}

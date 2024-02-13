@@ -1,0 +1,95 @@
+             <!-- <div class="search-box">
+
+                                    <div id="autocomplete" class="autocomplete">
+                                    <input class="autocomplete-input" />
+                                    <ul class="autocomplete-result-list"></ul>
+                                    </div>
+                                </div>
+                                <i class="uil uil-search search-icon" id="searchIcon"></i>
+                            </div> -->
+
+
+
+
+
+
+
+add search button
+url--------------
+ path('search/',views.search,name="search"),
+
+js------------------
+                            
+<script type="module"
+src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule
+src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+
+<script>
+new Autocomplete('#autocomplete',{
+
+    search : input =>{
+        console.log(input)
+        const url = `/search/?productname=${input}`
+        return new Promise(resolve =>{
+            fetch(url)
+            .then(response =>response.json())
+            .then(data =>{
+                console.log(data)
+                resolve(data.data)
+            })
+        })
+
+    },
+    onSubmit : result =>{
+        window.location.replace(`/prod-details/${result}`)
+    }
+})
+
+
+new Autocomplete('#autocomplete',{
+
+    search : input =>{
+        console.log(input)
+        const url = `/search/?productname=${input}`
+        return new Promise(resolve =>{
+            fetch(url)
+            .then(response =>response.json())
+            .then(data =>{
+                console.log(data)
+                resolve(data.data)
+            })
+        })
+
+    },
+    onSubmit : result =>{
+        window.location.replace(`/prod-details/${result}`)
+    }
+})
+</script>
+
+views----------------------
+def search(request):
+    
+
+
+    
+
+    categoryname=request.GET.get('categoryname')
+    productname=request.GET.get('productname')
+    payload=[ ]
+
+    if productname: 
+        product=Product.objects.filter(productname__icontains=productname)
+        for pro in product:
+            payload.append(pro.productname)
+
+    if categoryname: 
+        name=Category.objects.filter(categoryname__icontains=categoryname)
+        for nm in name:
+            payload.append(nm.categoryname)
+            
+    return JsonResponse({'status':200,'data':payload})

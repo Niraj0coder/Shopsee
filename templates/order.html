@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+{%load static%}
+
+{%block body %}
+
+
+
+
+        <!-- Cart Page Start -->
+        <div style="padding: 8vw 0;" class="container-fluid">
+            <div class="container py-5">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                       <h1>All Your Order Here</h1>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {%for i in ord%}
+                            <tr  class="card mb-4 shadow p-3 mb-5 bg-white rounded">
+                                <th scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{i.products.image.url}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+
+                                        <p>Order Id:{{i.razorpay_order_id}}</p>
+                                        <p class="px-4">Payment Status:{{i.payment_status}}</p>
+                                    </div>
+                                </th>
+                                <td>
+                                    <p  class="mb-0 mt-4 card-title">{{i.products.productname}}</p>
+                                </td>
+                                <td>
+                                    <p  class="mb-0 mt-4 card-text"> Price:₹ {{i.products.discount_price}}</p>
+                                </td>
+                             
+                              
+                                <td>
+                                  Status:{{i.processing_status}}
+                                </td>
+                            
+                            </tr>
+                            {%endfor%}
+                        
+                           
+                        </tbody>
+                    </table>
+                </div>
+          
+        <!-- Cart Page End -->
+<script>
+
+
+    
+
+</script>
+
+
+{%endblock body %}
